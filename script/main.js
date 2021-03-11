@@ -132,21 +132,39 @@ class BurgerMenu {
     this.show();
   }
   show() {
-    document.querySelector('#burger-btn').addEventListener('click', () => {
-      document.querySelector('.burger').classList.toggle('active');
-      document.querySelector('.header-menu').classList.toggle('open');
-      this.scroll();
-    });
-    const linkMenu = document.getElementsByClassName('header-menu-link');
+    const burgerShow = document
+      .querySelector('#burger-btn')
+      .addEventListener('click', () => {
+        document.querySelector('.burger').classList.toggle('active');
+        document.querySelector('.header-menu').classList.toggle('open');
+        this.link();
+        // this.scroll();
+        this.hide();
+      });
+    return burgerShow;
+  }
+  hide() {
+    const linkMenu = document.querySelectorAll('.burgerLink');
     [linkMenu].forEach.call(linkMenu, (el) => {
       el.addEventListener('click', () => {
         document.querySelector('.burger').classList.toggle('active');
         document.querySelector('.header-menu').classList.toggle('open');
-        this.scroll();
+        console.log('hide');
+        this.link();
+        // this.scroll();
       });
     });
+    return linkMenu;
   }
+  link() {
+    const burgerLink = document.querySelectorAll('.header-menu-link');
+    [burgerLink].forEach.call(burgerLink, (el) => {
+      el.classList.toggle('burgerLink');
+    });
+    return burgerLink;
 
+    // this.scroll();
+  }
   scroll() {
     document.querySelector('body').classList.toggle('scroll');
   }
