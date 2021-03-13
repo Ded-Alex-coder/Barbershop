@@ -30,6 +30,7 @@ header {
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 575px;
+  position: relative;
 }
 
 @media (min-width: 1025px) {
