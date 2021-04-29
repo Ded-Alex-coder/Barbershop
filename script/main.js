@@ -15,11 +15,24 @@ class ModalWindow {
   }
 
   closeModal() {
-    document.querySelector('.btn-close').addEventListener('click', () => {
+    function modalForm() {
       document
         .querySelector('body')
         .removeChild(document.querySelector('.modal'));
+    }
+
+    document.querySelector('.btn-close').addEventListener('click', () => {
+      modalForm();
       this.scroll();
+    });
+    // закрытие модального окна, при клике на пустую область, вне формы
+    document.querySelector('.modal').addEventListener('click', (event) => {
+      const target = event.target;
+      const modalTarget = target.closest('.modal-block');
+      if (!modalTarget) {
+        modalForm();
+        this.scroll();
+      }
     });
   }
 
@@ -138,32 +151,30 @@ class BurgerMenu {
         document.querySelector('.burger').classList.toggle('active');
         document.querySelector('.header-menu').classList.toggle('open');
         this.link();
-        // this.scroll();
+        this.scroll();
         this.hide();
       });
-    return burgerShow;
   }
   hide() {
-    const linkMenu = document.querySelectorAll('.burgerLink');
-    [linkMenu].forEach.call(linkMenu, (el) => {
-      el.addEventListener('click', () => {
-        document.querySelector('.burger').classList.toggle('active');
-        document.querySelector('.header-menu').classList.toggle('open');
-        console.log('hide');
-        this.link();
-        // this.scroll();
+    const allLinkMenu = document.querySelectorAll('.burgerLink');
+    allLinkMenu.forEach((linkMenu) => {
+      linkMenu.addEventListener('click', (event) => {
+        const target = event.target; // дилигируем событие
+        const linkTarget = target.closest('.burgerLink'); // назначаем елемент, которое делигируем. Грубо говоря контролим всплытие.
+        if (linkTarget) {
+          document.querySelector('.burger').classList.toggle('active');
+          document.querySelector('.header-menu').classList.toggle('open');
+          this.link();
+          this.scroll();
+        }
       });
     });
-    return linkMenu;
   }
   link() {
     const burgerLink = document.querySelectorAll('.header-menu-link');
-    [burgerLink].forEach.call(burgerLink, (el) => {
+    burgerLink.forEach.call(burgerLink, (el) => {
       el.classList.toggle('burgerLink');
     });
-    return burgerLink;
-
-    // this.scroll();
   }
   scroll() {
     document.querySelector('body').classList.toggle('scroll');
